@@ -1,67 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Google Maps Demo</title>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Google Maps Demo</title>
 
-  <script src="js/p5.min.js"></script>
-  <script src="js/mappa.js"></script>
+    <script src="js/p5.min.js"></script>
+    <script src="js/mappa.js"></script>
 
-  <style>
-    body {
-      padding: 0;
-      margin: 0;
-      width: 100vw;
-      height: 100vh;
-    }
-    :root {
-    }
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+      }
+      :root {
+      }
 
-    * {
-      box-sizing: border-box;
-    }
-
-
-    #topBar {
-      position: fixed;
-      top: 0;
-      z-index: 1000;
-
-      width: 100vw;
-      height: 50px;
-      padding: 20px;
+      * {
+        box-sizing: border-box;
+      }
 
 
-      background: rgba(255, 255, 255, .5);
-      -webkit-backdrop-filter: blur(50px);
-      box-shadow: 5px 5px 30px rgba(255, 200, 200, .1);
-    }
+      #topBar {
+        position: fixed;
+        top: 0;
+        z-index: 1000;
+
+        width: 100vw;
+        height: 50px;
+        padding: 20px;
 
 
-    .leaflet-container {
-      position: relative;
-      top: 0;
-      left: 0;
-      width: 100vw !important;
-      height: 100vh !important;
-    }
+        background: rgba(255, 255, 255, .5);
+        -webkit-backdrop-filter: blur(50px);
+        box-shadow: 5px 5px 30px rgba(255, 200, 200, .1);
+      }
 
-    .leaflet-control-zoom.leaflet-bar.leaflet-control, .leaflet-bottom.leaflet-right {
-      display: none;
-    }
 
-  
-  </style>
-</head>
-<body>
-	<div id="topBar">
-    test
-  </div>
+      .leaflet-container {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100vw !important;
+        height: 100vh !important;
+      }
 
-  <script src="data.js"></script>
-  <script src="js/script.js"></script>
+      .leaflet-control-zoom.leaflet-bar.leaflet-control, .leaflet-bottom.leaflet-right {
+        display: none;
+      }
 
-</body>
+    
+    </style>
+  </head>
+  <body>
+  	<div id="topBar">
+      test
+    </div>
+
+    <script src="js/dataManager.js"></script>
+    <script src="js/topBar.js"></script>
+    <script src="js/script.js"></script>
+  </body>
 </html>
+
+
+
+
+
