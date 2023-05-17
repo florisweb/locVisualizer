@@ -49,7 +49,7 @@ function onChange() {
     let dx = pos2.x - pos.x;
     let dy = pos.y - pos2.y;
 
-    let opacity = 1 - Math.pow(2, -tile.counts / 10);
+    let opacity = (1 - Math.pow(2, -tile.counts / 10)) / 2;
     fill('rgba(255, 0, 0, ' + opacity + ')');
     rect(pos.x, pos.y, dx, dy);
   }
