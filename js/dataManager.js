@@ -5,30 +5,42 @@ const DataManager = new class {
   tileGrid = [];
   tileList = [];
 
-  tileWidth = 0.007; // in latitudal degrees
-  tileHeight = 0.01; // in longitudal degrees
+  tileWidth = 0.009; // in latitudal degrees
+  tileHeight = 0.015; // in longitudal degrees
 
   get data() {
     return this.#dataPoints;
   }
-
 
   constructor() {
   }
 
   async setup() {
     await this.#fetchData();
+    setInterval(() => this.#fetchData(), 1000);
   }
 
   async #fetchData() {
-    let response = await fetch('API/data.json');
+    let headers = new Headers();
+    headers.append('pragma', 'no-cache');
+    headers.append('cache-control', 'no-cache');
+
+    let init = {
+      method: 'GET',
+      headers: headers,
+    };
+
+    let response = await fetch('API/data.json', init);
+
     let result = await response.json();
-    if (typeof result === 'object') this.#dataPoints = result;
+    if (typeof result === 'object') this.#dataPoints = result.map(point => new DataPoint(point));
     this.#convertDataToTiles(this.#dataPoints);
     this.onFetchData();
   }
 
   #convertDataToTiles(_data) {
+    this.tileGrid = [];
+    this.tileList = [];
     for (let point of _data)
     {
       let lat = Math.round(point.lat / this.tileWidth) * this.tileWidth;
@@ -57,6 +69,28 @@ class Tile {
   constructor({long, lat}) {
     this.long = long;
     this.lat = lat;
+  }
+}
+
+class DataPoint {
+  lat;
+  long;
+  date;
+  dateString = '';
+
+  constructor({lat, long, date}) {
+    this.lat = lat;
+    this.long = long;
+    this.date = new Date();
+    this.dateString = date;
+    let dateTime = date.split(', ');
+    let dateParts = dateTime[0].split('/');
+    let timeParts = dateTime[1].split(':');
+    this.date.setDate(parseInt(dateParts[0]));
+    this.date.setMonth(parseInt(dateParts[1]) - 1);
+    this.date.setYear(parseInt(dateParts[2]));
+    this.date.setHours(parseInt(timeParts[0]));
+    this.date.setMinutes(parseInt(timeParts[1]));
   }
 }
 

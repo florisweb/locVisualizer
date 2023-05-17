@@ -39,14 +39,15 @@ async function setup() {
 
 function onChange() {
   clear();
+  // const mPerPx = calcMetresPerPixel();
 
   for (let tile of DataManager.tileList) 
   {
     if (!myMap.map.getBounds().contains({lat: tile.lat, lng: tile.long})) continue;
-    let pos = myMap.latLngToPixel(tile.lat - DataManager.tileWidth / 2, tile.long - DataManager.tileHeight / 2);
-    let pos2 = myMap.latLngToPixel(tile.lat + DataManager.tileWidth / 2, tile.long + DataManager.tileHeight / 2);
+    let pos = myMap.latLngToPixel(tile.lat, tile.long);
+    let pos2 = myMap.latLngToPixel(tile.lat + DataManager.tileWidth, tile.long + DataManager.tileHeight);
     let dx = pos2.x - pos.x;
-    let dy = pos2.y - pos.y;
+    let dy = pos.y - pos2.y;
 
     let opacity = 1 - Math.pow(2, -tile.counts / 10);
     fill('rgba(255, 0, 0, ' + opacity + ')');
@@ -55,9 +56,7 @@ function onChange() {
 }	
 
 
-
-
-function metresPerPixel() {
+function calcMetresPerPixel() {
     const southEastPoint = myMap.map.getBounds().getSouthEast();
     const northEastPoint = myMap.map.getBounds().getNorthEast();
     const mapHeightInMetres = southEastPoint.distanceTo(northEastPoint);

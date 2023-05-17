@@ -10,6 +10,8 @@ function setTextToElement(element, text) {
 }
 
 
+
+
 const TopBar = new class {
   #HTML = {
     topBar: $('#topBar')[0],
@@ -20,6 +22,11 @@ const TopBar = new class {
   }
 
   update() {
-    setTextToElement(this.#HTML.topBar, 'Tiles: ' + DataManager.tileList.length + ' of ' + DataManager.data.length + ' points.');
+    let lastPoint =  DataManager.data[DataManager.data.length - 1];
+
+    setTextToElement(this.#HTML.topBar, 
+      'Tiles: ' + DataManager.tileList.length + 
+      ' Points: ' + DataManager.data.length + 
+      ' ' + (lastPoint ? 'Last update: ' + lastPoint.dateString : ''));
   }
 }
