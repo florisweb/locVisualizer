@@ -1,20 +1,9 @@
 
-function $() {
-  return document.querySelectorAll(...arguments);
-}
-function setTextToElement(element, text) {
-  element.innerHTML = "";
-  let a = document.createElement('a');
-  a.text = text;
-  element.append(a);
-}
-
-
-
-
 const TopBar = new class {
   #HTML = {
     topBar: $('#topBar')[0],
+    tileInfoHolder: $('#topBar .infoHolder')[1],
+    updateInfoHolder: $('#topBar .infoHolder')[0],
   }
   constructor() {
 
@@ -23,10 +12,7 @@ const TopBar = new class {
 
   update() {
     let lastPoint =  DataManager.data[DataManager.data.length - 1];
-
-    setTextToElement(this.#HTML.topBar, 
-      'Tiles: ' + DataManager.tileList.length + 
-      ' Points: ' + DataManager.data.length + 
-      ' ' + (lastPoint ? 'Last update: ' + lastPoint.dateString : ''));
+    setTextToElement(this.#HTML.tileInfoHolder, DataManager.tileList.length + ' Tiles');
+    setTextToElement(this.#HTML.updateInfoHolder, DataManager.data.length + ' Points' + (lastPoint ? ' (' + lastPoint.dateString.substr(1, 1000) + ')' : ''));
   }
 }

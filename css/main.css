@@ -12,20 +12,7 @@ body {
 }
 
 
-#topBar {
-  position: fixed;
-  top: 0;
-  z-index: 1000;
 
-  width: 100vw;
-  height: 50px;
-  padding: 20px;
-
-
-  background: rgba(255, 255, 255, .5);
-  -webkit-backdrop-filter: blur(50px);
-  box-shadow: 5px 5px 30px rgba(255, 200, 200, .1);
-}
 
 
 .leaflet-container {
@@ -38,4 +25,52 @@ body {
 
 .leaflet-control-zoom.leaflet-bar.leaflet-control, .leaflet-bottom.leaflet-right {
   display: none;
+}
+
+#topBar {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+
+  width: 100vw;
+  height: 50px;
+  padding: 10px 20px;
+
+
+  background: rgba(255, 255, 255, .5);
+  -webkit-backdrop-filter: blur(50px);
+  box-shadow: 5px 5px 30px rgba(255, 200, 200, .1);
+  display: flex;
+}
+
+#topBar .logoHolder {
+  font-size: 20px;
+}
+
+#topBar .logoHolder, #topBar .infoHolder {
+  flex: 1;
+  line-height: 30px;
+  height: 30px;
+}
+
+#topBar .infoHolder {
+  flex: 1;
+  font-size: 14px;
+}
+
+#topBar .infoHolder.tileCountHolder {
+  position: relative;
+  flex: unset;
+  margin-top: -2.5px;
+
+  width: auto;
+  height: 35px;
+  line-height: 25px;
+  padding: 5px 15px;
+
+
+  text-align: center;
+  background: #f30;
+  border-radius: 5px;
+  color: #fff;
 }
