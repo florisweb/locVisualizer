@@ -39,21 +39,37 @@ async function setup() {
 
 function onChange() {
   clear();
-  // const mPerPx = calcMetresPerPixel();
+  drawTiles();
+  drawPoints();
+}	
 
+
+function drawTiles() {
   for (let tile of DataManager.tileList) 
   {
     if (!myMap.map.getBounds().contains({lat: tile.lat, lng: tile.long})) continue;
     let pos = myMap.latLngToPixel(tile.lat, tile.long);
     let pos2 = myMap.latLngToPixel(tile.lat + DataManager.tileWidth, tile.long + DataManager.tileHeight);
     let dx = pos2.x - pos.x;
-    let dy = pos.y - pos2.y;
+    let dy = pos2.y - pos.y;
 
     let opacity = (1 - Math.pow(2, -tile.counts / 10)) / 2;
     fill('rgba(255, 0, 0, ' + opacity + ')');
     rect(pos.x, pos.y, dx, dy);
   }
-}	
+}
+
+function drawPoints() {
+  let dataPoints = Object.assign([], DataManager.data);
+  dataPoints = dataPoints.splice(dataPoints.length - 50, 50);
+  for (let point of dataPoints) 
+  {
+    if (!myMap.map.getBounds().contains({lat: point.lat, lng: point.long})) continue;
+    let pos = myMap.latLngToPixel(point.lat, point.long);
+    fill('#f00');
+    ellipse(pos.x, pos.y, 5, 5);
+  }
+}
 
 
 function calcMetresPerPixel() {

@@ -17,7 +17,7 @@ const DataManager = new class {
 
   async setup() {
     await this.#fetchData();
-    setInterval(() => this.#fetchData(), 1000);
+    setInterval(() => this.#fetchData(), 1000 * 10);
   }
 
   async #fetchData() {
@@ -43,8 +43,8 @@ const DataManager = new class {
     this.tileList = [];
     for (let point of _data)
     {
-      let lat = Math.round(point.lat / this.tileWidth) * this.tileWidth;
-      let long = Math.round(point.long / this.tileHeight) * this.tileHeight;
+      let lat = Math.floor(point.lat / this.tileWidth) * this.tileWidth;
+      let long = Math.floor(point.long / this.tileHeight) * this.tileHeight;
       if (!this.tileGrid[long]) this.tileGrid[long] = [];
       if (!this.tileGrid[long][lat])
       {
