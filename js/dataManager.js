@@ -12,6 +12,24 @@ const DataManager = new class {
     return this.#dataPoints;
   }
 
+  get localisationFactor() {
+    let points = this.#dataPoints.filter((_p) => new Date() - _p.date < 1000 * 60 * 60 * 24 * 7);
+    let topPointCount = Math.ceil(points.length * .5);
+    let tiles = this.#convertDataToTiles(points);
+    tiles.list.sort((a, b) => a.counts < b.counts);
+    let pointCount = 0;
+    for (let i = 0; i < tiles.list.length; i++)
+    {
+      if (pointCount + tiles.list[i].counts > topPointCount) 
+      {
+        let fraction = (topPointCount - pointCount) / tiles.list[i].counts;
+        return i + fraction;
+      }
+      pointCount += tiles.list[i].counts;
+    }
+    return tiles.list.length;
+  }
+
   constructor() {
   }
 
@@ -34,24 +52,31 @@ const DataManager = new class {
 
     let result = await response.json();
     if (typeof result === 'object') this.#dataPoints = result.map(point => new DataPoint(point));
-    this.#convertDataToTiles(this.#dataPoints);
+    
+    let tiles = this.#convertDataToTiles(this.#dataPoints);
+    this.tileGrid = tiles.grid;
+    this.tileList = tiles.list;
     this.onFetchData();
   }
 
   #convertDataToTiles(_data) {
-    this.tileGrid = [];
-    this.tileList = [];
+    let tileList = [];
+    let tileGrid = [];
     for (let point of _data)
     {
       let lat = Math.floor(point.lat / this.tileWidth) * this.tileWidth;
       let long = Math.floor(point.long / this.tileHeight) * this.tileHeight;
-      if (!this.tileGrid[long]) this.tileGrid[long] = [];
-      if (!this.tileGrid[long][lat])
+      if (!tileGrid[long]) tileGrid[long] = [];
+      if (!tileGrid[long][lat])
       {
         let obj = new Tile({long: long, lat: lat});
-        this.tileGrid[long][lat] = obj;
-        this.tileList.push(obj);
-      } else this.tileGrid[long][lat].counts++;
+        tileGrid[long][lat] = obj;
+        tileList.push(obj);
+      } else tileGrid[long][lat].counts++;
+    }
+    return {
+      grid: tileGrid,
+      list: tileList
     }
   }
 
