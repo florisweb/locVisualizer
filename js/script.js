@@ -1,13 +1,13 @@
 
 
 
-
+const drawXMostRecentPointsCount = 100;
 
 
 // Options for map
 var options = {
-  lat: -52.3,
-  lng: -5,
+  lat: 52.3,
+  lng: 5,
   zoom: 8,
   style: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
 }
@@ -74,7 +74,7 @@ function drawTiles() {
 
 function drawPoints() {
   let dataPoints = Object.assign([], DataManager.data);
-  dataPoints = dataPoints.splice(dataPoints.length - 50, 50);
+  dataPoints = dataPoints.splice(dataPoints.length - drawXMostRecentPointsCount, drawXMostRecentPointsCount);
   for (let point of dataPoints) 
   {
     if (!myMap.map.getBounds().contains({lat: point.lat, lng: point.long})) continue;
