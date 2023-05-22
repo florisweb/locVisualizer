@@ -13,6 +13,7 @@ function setTextToElement(element, text) {
 
 function getLocation() {
   return new Promise((resolve, error) => {
+    if (window.location.protocol !== 'https:') return resolve(false); // Won't be allowed anyway.
     if (!navigator.geolocation) {
       error("Geolocation is not supported by your browser");
     } else {

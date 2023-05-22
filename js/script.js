@@ -3,7 +3,6 @@
 
 const drawXMostRecentPointsCount = 100;
 
-
 // Options for map
 var options = {
   lat: 52.3,
@@ -74,7 +73,7 @@ function drawTiles() {
 
 function drawPoints() {
   let dataPoints = Object.assign([], DataManager.data);
-  dataPoints = dataPoints.splice(dataPoints.length - drawXMostRecentPointsCount, drawXMostRecentPointsCount);
+  dataPoints = dataPoints.splice(Math.max(dataPoints.length - drawXMostRecentPointsCount, 0), drawXMostRecentPointsCount);
   for (let point of dataPoints) 
   {
     if (!myMap.map.getBounds().contains({lat: point.lat, lng: point.long})) continue;
